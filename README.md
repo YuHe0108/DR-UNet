@@ -2,7 +2,9 @@
 
 ------
 
-![model structure](figures/Fig1.jpg)
+<img src="figures/Fig1.jpg" alt="model structure" style="zoom:50%;" />
+
+
 
 
 
