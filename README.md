@@ -2,7 +2,7 @@
 
 ------
 
-![model structure](figures/drunet.jpg)
+![model structure](figures/Fig1.jpg)
 
 
 
