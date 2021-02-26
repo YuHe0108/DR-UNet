@@ -5,11 +5,10 @@
 
 ![model structure](figures/Fig0.jpg)
 
+<img src="figures/Fig1.jpg" alt="model structure " style="zoom:50%;" />
 
-![model structure](figures/Fig1.jpg)
 
-
-![model structure](figures/Fig2.jpg)
+<img src="figures/Fig2.jpg" alt="model structure" style="zoom:50%;" />
 
 
 ![model structure](figures/Fig3.jpg)
