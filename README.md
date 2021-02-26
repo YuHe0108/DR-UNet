@@ -2,7 +2,9 @@
 
 ------
 
-<img src="figures/Fig1.jpg" alt="model structure" style="zoom:50%;" />
+<img src="figures/Fig1.jpg" alt="model structure" style="zoom:20%;" />
+
+
 
 
 
