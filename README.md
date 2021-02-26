@@ -18,6 +18,11 @@
 ![model structure](figures/Fig4.jpg)
 
 
+![model structure](figures/Fig5.jpg)
+
+
+![model structure](figures/Fig6.png)
+
 
 
 
