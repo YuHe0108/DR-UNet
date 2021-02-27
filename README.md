@@ -14,7 +14,7 @@ To increase the segmentation performance of the model, three reduced dimensional
 
 ![model structure](figures/Fig7.jpg)
 
-
+ 
 
 ## Getting Started
 
