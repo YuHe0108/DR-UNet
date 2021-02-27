@@ -7,29 +7,14 @@ import matplotlib.pyplot as plt
 import tensorflow as tf
 import numpy as np
 import cv2 as cv
+import utils
 import tqdm
-
-
-def list_file(dir_path):
-    paths = []
-    for path in pathlib.Path(dir_path).iterdir():
-        paths.append(str(path))
-    return paths
-
-
-def check_file(paths):
-    if type(paths) is not list:
-        paths = [paths]
-    for path in paths:
-        if not os.path.exists(path):
-            os.makedirs(path)
-    return
 
 
 def binary_image_from_dri(input_dir, threshold=128, save_dir=None):
     if os.path.isdir(input_dir):
-        paths = list_file(input_dir)
-        check_file([save_dir])
+        paths = utils.list_file(input_dir)
+        utils.check_file([save_dir])
     else:
         paths = [input_dir]
 
@@ -144,7 +129,7 @@ def save_invalid_data(origin_images, drawed_images, pred_mask_images, image_name
     origin_save_dir = os.path.join(save_dir, 'origin')
     drawed_save_dir = os.path.join(save_dir, 'drawed')
     mask_save_dir = os.path.join(save_dir, 'pred_mask')
-    check_file([origin_save_dir, drawed_save_dir, mask_save_dir])
+    utils.check_file([origin_save_dir, drawed_save_dir, mask_save_dir])
 
     for index in range(len(origin_images)):
         origin_image = origin_images[index]
