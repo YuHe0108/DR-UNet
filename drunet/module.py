@@ -51,17 +51,12 @@ def binary_image(image, threshold):
 
 
 def reverse_pred_image(normalize_pred_image):
-    # 预测图像的像素值在0-1之间，将其还原为0-255的uint8图像
     reverse_image = normalize_pred_image.squeeze() * 255.0
     reverse_image = np.array(reverse_image, dtype=np.uint8)
     return reverse_image
 
 
-# 1. 保存预测mask图像
-def save_images_v2(pred, index, save_path, image_shape=None, split=False):
-    if image_shape is None:
-        image_shape = [args.HEIGHT, args.WIDTH, args.CHANNEL]
-
+def save_images(pred, index, save_path, image_shape, split=False):
     image_numbers = int(np.sqrt(pred.shape[0]))
     if not split:
         h = image_shape[0]
@@ -88,48 +83,6 @@ def save_images_v2(pred, index, save_path, image_shape=None, split=False):
             image = np.array(image, dtype=np.uint8)
             image = image.squeeze()
             path = os.path.join(save_path, 'Segment_pred_{}_{}.png'.format(index, i))
-            plt.imsave(path, image, cmap='gray')
-    return
-
-
-def save_images(image_shape, pred, save_path, index, cols=4, split=False):
-    if not os.path.exists(save_path):
-        os.makedirs(save_path)
-
-    image_numbers = pred.shape[0]
-    rows = math.ceil(image_numbers / cols)
-    if not split:
-        h = image_shape[0]
-        w = image_shape[1]
-        H = int(rows * image_shape[0])
-        W = int(cols * image_shape[1])
-        big_image = np.zeros(shape=(H, W, image_shape[-1]), dtype=np.uint8).squeeze()
-
-        def _read_image(image_):
-            image_ = (image_ * 255.0)
-            image_ = np.array(image_, dtype=np.uint8)
-            image_ = image_.squeeze()
-            return image_
-
-        k = 0
-        for row in range(rows):
-            for col in range(cols):
-                if image_shape[-1] == 1:
-                    big_image[row * h:(row + 1) * h, col * w:(col + 1) * w] = _read_image(pred[k])
-                else:
-                    big_image[row * h:(row + 1) * h, col * w:(col + 1) * w, :] = _read_image(pred[k])
-                k += 1
-        path = os.path.join(save_path, '{}.png'.format(index))
-        if image_shape[-1] == 1:
-            plt.imsave(path, big_image, cmap='gray')
-        else:
-            plt.imsave(path, big_image)
-    else:
-        for i in range(image_numbers):
-            image = (pred[i, ...] * 255.0)
-            image = np.array(image, dtype=np.uint8)
-            image = image.squeeze()
-            path = os.path.join(save_path, '{}_{}.png'.format(index, i))
             plt.imsave(path, image, cmap='gray')
     return
 

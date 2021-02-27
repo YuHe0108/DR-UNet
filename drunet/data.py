@@ -1,13 +1,14 @@
 import os
 import pathlib
 
+import tqdm
 import cv2 as cv
-import matplotlib.pyplot as plt
 import numpy as np
 import tensorflow as tf
-import tensorflow.keras as keras
-import tqdm
 from tensorflow.keras import *
+import matplotlib.pyplot as plt
+import tensorflow.keras as keras
+import utils
 
 
 def return_inputs(inputs):
@@ -17,7 +18,7 @@ def return_inputs(inputs):
         if os.path.isfile(inputs):
             all_image_paths = [inputs]
         elif os.path.isdir(inputs):
-            all_image_paths = list_file(inputs)
+            all_image_paths = utils.list_file(inputs)
     elif type(inputs) is list:
         all_image_paths = inputs
     return all_image_paths
@@ -50,7 +51,7 @@ class TFData:
         self.mask_dir = mask_dir
         self.out_name = out_name
         self.out_dir = os.path.join(out_dir, out_name)
-        self.mask_gray = mask_gray  # mask是否为灰度图像
+        self.mask_gray = mask_gray
 
         if len(image_shape) == 3 and image_shape[-1] != 1:
             self.image_gray = False
@@ -94,7 +95,7 @@ class TFData:
                         'image': tf.train.Feature(bytes_list=tf.train.BytesList(value=[image]))
                     }
                 ))
-                writer.write(example.SerializeToString())  # 序列化为字符串
+                writer.write(example.SerializeToString())
             writer.close()
         print('Dataset finished!')
 
@@ -106,7 +107,7 @@ class TFData:
                 'image': tf.io.FixedLenFeature([], tf.string)
             }
         )
-        # 取出我们需要的数据（标签，图片）
+
         image = features['image']
         image = tf.io.decode_raw(image, tf.uint8)
         if self.image_gray:
@@ -131,7 +132,6 @@ class TFData:
         else:
             data_name = data_name
 
-        # 声明TFRecordDataset
         if self.zip_file:
             dataset = tf.data.TFRecordDataset(data_name, compression_type='GZIP')
         else:
@@ -139,7 +139,6 @@ class TFData:
         dataset = dataset.map(self._parse_function)
 
         if shuffle:
-            # 打乱顺序，无限重复训练数据，定义好batch size
             dataset = dataset.shuffle(buffer_size=100).repeat(repeat).batch(batch_size, drop_remainder=True)
         else:
             dataset = dataset.repeat(repeat).batch(batch_size, drop_remainder=True)
@@ -169,7 +168,6 @@ def get_tfrecord_data(tf_record_path, tf_record_name, data_shape, batch_size=32,
     return seg_data
 
 
-# 2. 获取训练期间测试所用的data
 def get_test_data(test_data_path, image_shape, image_nums=16):
     """
     :param test_data_path: test image path
