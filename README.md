@@ -6,6 +6,8 @@
 
 This is an implementation of  DR-UNet on Python 3.6, Keras, and TensorFlow2.0. DR-UNet consists of an encoding (down-sampling) path and a decoding (up-sampling) path. The model structure is shown in the figure below.
 
+<img src="figures/Fig6.png" alt="model structure" style="zoom:150%;" />
+
 
 
 ![model structure](figures/Fig0.jpg)
@@ -20,36 +22,46 @@ We first trained DR-UNet to recognize the hematoma region in patients. The perfo
 
 As shown in the table below, results of sensitivity, specificity, precision, Dice, Jaccard and VOE by four methods in the internal testing and the external testing dataset.
 
-![model structure](figures/Fig8.jpg)
+![results](figures/Fig8.jpg)
 
 Figure A shows the boxplots for the performance of the DR-UNet models and the other three methods for the segmentation and detection of ICHs on the two testing datasets. The internal testing dataset in the retrospective dataset was enriched to include all ICH subtypes. In Figure B, four different types of hematomas were included, and we visually presented a performance comparison among the DR-UNet, UNet, FCM and active contour methods.
 
-<img src="figures/Fig1.jpg" alt="model structure " style="zoom:90%;" />
+<img src="figures/Fig1.jpg" alt="segment result" style="zoom:90%;" />
+
+## Irregularly shaped and epidural hematoma
+
+Results of hematoma volumetric analysis in (A) irregularly shaped hematoma group and (B) subdural and epidural hematoma group. Input ICH images with manual segmentation were denoted by red line. The segmented outputs of the DR-UNet model were denoted by blue lines, the segmented outputs of the UNet were denoted by green lines.
+
+![segmentaion](figures/Fig3.jpg)
 
 
+Four examples of ICH segmentation in the subdural and epidural hematomas with original images and partially enlarged image in the prospective dataset. 
+![segmentation](figures/Fig4.jpg)
 
-<img src="figures/Fig2.jpg" alt="model structure" style="zoom:50%;" />
-
-
-![model structure](figures/Fig3.jpg)
-
-
-![model structure](figures/Fig4.jpg)
+Four examples of ICH segmentation in the irregular-shaped hematomas with original images and partially enlarged image in the prospective dataset. 
+![](figures/Fig5.jpg)
 
 
-![model structure](figures/Fig5.jpg)
+## Calculate the hematoma volume experiment
 
+The hematoma volumetric analysis by DR-UNet, UNet and Coniglobus method. A. The diagnoses of HVs were presented by ground truth and three different methods. B. The correlation plots among ground truth and three different methods. C. The error curves of three methods were plotted. The error curves of three methods were plotted. They were the error of {ground truth – the measurement by DR-UNet}, the error of {ground truth – the measurement by UNet} and the error of {ground truth – the measurement by Coniglobus formula}, respectively. D. The results of RMSE, SD, MAE and averaged time (second/scan).
 
-![model structure](figures/Fig6.png)
-
-
-
-
-
-
+<img src="figures/Fig2.jpg" alt="model structure" style="zoom:70%;" />
 
 
 
 
+## Getting Started
 
+- [data.py](drunet/data.py) 
+- [loss.py](drunet/loss.py) 
+- [module.py](drunet/module.py) 
+- [utils.py](drunet/utils.py) 
+- [performance.py](drunet/performance.py) 
+- [drunet.py](drunet/model/dr_unet.py) 
+- [main.py](drunet/main.py) 
+
+## Requirements
+
+Python 3.6, TensorFlow 2.1 and other common packages listed in `requirements.txt`.
 
