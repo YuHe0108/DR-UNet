@@ -14,11 +14,18 @@ To increase the segmentation performance of the model, three reduced dimensional
 
 ![model structure](figures/Fig7.jpg)
 
- 年后
+## Experimental results of hematoma segmentation
 
-## Getting Started
+We first trained DR-UNet to recognize the hematoma region in patients. The performance was evaluated on two testing datasets (internal and external) using the following criteria: i) sensitivity, ii) specificity, iii) precision, iv) Dice, v) Jaccard and vi) VOE (details in the Methods section). Moreover, we compared DR-UNet with UNet, FCM and active contours. In all four methods, segmentation labeling was considered the ground truth standard (details in the Methods section). The main calculation results are shown in the figure and table below.
 
-<img src="figures/Fig1.jpg" alt="model structure " style="zoom:50%;" />
+As shown in the table below, results of sensitivity, specificity, precision, Dice, Jaccard and VOE by four methods in the internal testing and the external testing dataset.
+
+![model structure](figures/Fig8.jpg)
+
+Figure A shows the boxplots for the performance of the DR-UNet models and the other three methods for the segmentation and detection of ICHs on the two testing datasets. The internal testing dataset in the retrospective dataset was enriched to include all ICH subtypes. In Figure B, four different types of hematomas were included, and we visually presented a performance comparison among the DR-UNet, UNet, FCM and active contour methods.
+
+<img src="figures/Fig1.jpg" alt="model structure " style="zoom:90%;" />
+
 
 
 <img src="figures/Fig2.jpg" alt="model structure" style="zoom:50%;" />
