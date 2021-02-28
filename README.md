@@ -53,6 +53,17 @@ The hematoma volumetric analysis by DR-UNet, UNet and Coniglobus method. A. The 
 
 - [data.py](drunet/data.py)  Used to make your own dataset. Making your own dataset needs to satisfy having original images and the ground truth images. The completed dataset is a unique data format of tensorflow. 
 
+  ```python
+  from data import make_data
+  
+  # make tfrecords datasets
+  make_data(image_shape, image_dir, mask_dir, out_name, out_dir)
+  
+  # get tfrecords datasets
+  dataset = get_tfrecord_data(
+      tf_record_path, tf_record_name, data_shape, batch_size=32, repeat=1, shuffle=True)
+  ```
+
 - [loss.py](drunet/loss.py)  According to the characteristics of the cerebral hematoma dataset, in order to obtain higher segmentation accuracy. We use binary cross entropy with dice as the loss function of DR-Unet.
 
 - [module.py](drunet/module.py) This file contains several auxiliary functions for image processing.
@@ -70,9 +81,50 @@ The hematoma volumetric analysis by DR-UNet, UNet and Coniglobus method. A. The 
   model.summary()
   ```
 
-  
-
 - [main.py](drunet/main.py) This file shows how to train, test and verification DR-UNet on your own dataset. Including hematoma segmentation and hematoma volume estimation.
+
+  ```python
+  import pathlib
+  
+  # Parameter configuration
+  parser = argparse.ArgumentParser(description="Segment Use Args")
+  parser.add_argument('--model-name', default='DR_UNet', type=str)
+  parser.add_argument('--dims', default=32, type=int)
+  parser.add_argument('--epochs', default=50, type=int)
+  parser.add_argument('--batch-size', default=16, type=int)
+  parser.add_argument('--lr', default=2e-4, type=float)
+  
+  # Training data, testing, verification parameter settings
+  parser.add_argument('--height', default=256, type=int)
+  parser.add_argument('--width', default=256, type=int)
+  parser.add_argument('--channel', default=1, type=int)
+  parser.add_argument('--pred-height', default=4 * 256, type=int)
+  parser.add_argument('--pred-width', default=4 * 256, type=int)
+  parser.add_argument('--total-samples', default=5000, type=int)
+  parser.add_argument('--invalid-samples', default=1000, type=int)
+  parser.add_argument('--regularize', default=False, type=bool)
+  parser.add_argument('--record-dir', default=r'', type=str, help='the save dir of tfrecord')
+  parser.add_argument('--train-record-name', type=str, default=r'train_data', 
+                      help='the train record save name')
+  parser.add_argument('--test-image-dir', default=r'', type=str, 
+                      help='the path of test images dir')
+  parser.add_argument('--invalid-record-name', type=str, default=r'test_data', 
+                      help='the invalid record save name')
+  parser.add_argument('--gt-mask-dir', default=r'', type=str, 
+                      help='the ground truth dir of validation set')
+  parser.add_argument('--invalid-volume-dir', default=r'', type=str, 
+                      help='estimation bleeding volume')
+  args = parser.parse_args()
+  
+  
+  segment = Segmentation(args)
+  # start training
+  segment.train() 
+  # predict hematoma volume
+  segment.predict_blood_volume(input_dir, save_dir, calc_nums=-1, dpi=96, thickness=0.45)
+  ```
+
+  
 
 ## Requirements
 
