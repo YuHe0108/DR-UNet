@@ -52,11 +52,26 @@ The hematoma volumetric analysis by DR-UNet, UNet and Coniglobus method. A. The 
 ## Getting Started
 
 - [data.py](drunet/data.py)  Used to make your own dataset. Making your own dataset needs to satisfy having original images and the ground truth images. The completed dataset is a unique data format of tensorflow. 
+
 - [loss.py](drunet/loss.py)  According to the characteristics of the cerebral hematoma dataset, in order to obtain higher segmentation accuracy. We use binary cross entropy with dice as the loss function of DR-Unet.
+
 - [module.py](drunet/module.py) This file contains several auxiliary functions for image processing.
+
 - [utils.py](drunet/utils.py) This python file contains several auxiliary functions for file operations.
+
 - [performance.py](drunet/performance.py) In order to evaluate the segmentation performance of the model, this file contains auxiliary functions for the calculation of several common segmentation indicators.
+
 - [drunet.py](drunet/model/dr_unet.py) This file contains the specific implementation of DR-UNet and three reduced dimensional residual convolution units (RDRCUs).
+
+  ```python
+  from model import dr_unet
+  
+  model = dr_unet.dr_unet(input_shape=(256, 256, 1))
+  model.summary()
+  ```
+
+  
+
 - [main.py](drunet/main.py) This file shows how to train, test and verification DR-UNet on your own dataset. Including hematoma segmentation and hematoma volume estimation.
 
 ## Requirements
