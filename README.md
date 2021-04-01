@@ -81,7 +81,7 @@ The hematoma volumetric analysis by DR-UNet, UNet and Coniglobus method. A. The 
   model.summary()
   ```
 
-- [main.py](drunet/main.py) This file shows how to train, test and verification DR-UNet on your own dataset. Including hematoma segmentation and hematoma volume estimation.
+- [segment.py](drunet/segment.py) This file shows how to train, test and verification DR-UNet on your own dataset. Including hematoma segmentation and hematoma volume estimation.
 
   ```python
   import pathlib
@@ -124,7 +124,13 @@ The hematoma volumetric analysis by DR-UNet, UNet and Coniglobus method. A. The 
   segment.predict_blood_volume(input_dir, save_dir, calc_nums=-1, dpi=96, thickness=0.45)
   ```
 
+  [train_segment.py](drunet/train_segment.py) If you want to train the segmentation model, you can run this file directly after filling in the data path.
   
+  [predict_segment.py](drunet/predict_segment.py) If you want to predict the segmentation result, you can run this file directly after filling in the ct images path.
+  
+  [predict_volume.py](drunet/predict_volume.py) If you want to predict the complete hematoma volume of a patient, after filling in the path, then you can run this file,
+  
+  [test_performance.py](drunet/test_performance.py) If you want to understand the segmentation performance of the model, you need to fill in the relevant path first, and then run this file.
 
 ## Requirements
 
