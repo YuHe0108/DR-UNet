@@ -126,11 +126,55 @@ The hematoma volumetric analysis by DR-UNet, UNet and Coniglobus method. A. The 
 
   [train_segment.py](drunet/train_segment.py) If you want to train the segmentation model, you can run this file directly after filling in the data path.
   
+  ```python
+  import segment
+  
+  if __name__ == '__main__':
+      Seg = segment.Segmentation()
+      # start training
+      Seg.train()
+  ```
+  
   [predict_segment.py](drunet/predict_segment.py) If you want to predict the segmentation result, you can run this file directly after filling in the ct images path.
+  
+  ```python
+  import segment
+  
+  if __name__ == '__main__':
+      Seg = segment.Segmentation()
+      # start predict
+      input_dir = r''  # Fill in the image path
+      save_dir = r''  # fill in save path
+      Seg.predict_and_save(input_dir, save_dir)
+  
+  ```
   
   [predict_volume.py](drunet/predict_volume.py) If you want to predict the complete hematoma volume of a patient, after filling in the path, then you can run this file,
   
+  ```python
+  import segment
+  
+  if __name__ == '__main__':
+      Seg = segment.Segmentation()
+      # start predict
+      input_dir = r''  # Fill in the image path
+      save_dir = r''  # fill in save path
+      Seg.predict_blood_volume(input_dir, save_dir, thickness=0.45)
+  ```
+  
   [test_performance.py](drunet/test_performance.py) If you want to understand the segmentation performance of the model, you need to fill in the relevant path first, and then run this file.
+  
+  ```python
+  import performance
+  
+  if __name__ == '__main__':
+      # test model segmentation performance
+      pred_path = r''  # predict result path
+      gt_path = r''  # ground truth path
+      calc_performance(pred_path, gt_path, img_resize=(1400, 1400))
+  ```
+  
+  
 
 ## Requirements
 
